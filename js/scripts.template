@@ -1,0 +1,17 @@
+﻿/*
+* @author Andrew Reitz areitz@nerdery.com
+*/
+
+var NERD = NERD || {};
+
+(function (window, undefined) {
+    
+    {{{ApiHelper}}}
+
+    {{{AddGame}}}
+
+    {{{GameController}}}
+    
+    {{{Bind}}}
+
+} (window));
