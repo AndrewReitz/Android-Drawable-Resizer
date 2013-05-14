@@ -1,0 +1,8 @@
+{
+  "name": "Android-Drawable-Resizer",
+  "version": "0.1.0",
+  "dependencies": {
+    "jszip": "~1.0.0",
+	"requirejs": "~2.1.6"
+  }
+}
