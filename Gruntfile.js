@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
 	// Files to watch and run jshint on
-	var files = ['Gruntfile.js', 'scripts/*.js'];
+	var files = ['Gruntfile.js', 'js/*.js'];
 
 	// Project configuration.
 	grunt.initConfig({
@@ -15,13 +15,10 @@ module.exports = function(grunt) {
 			files: files
 		}
 	});
-  
+
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	
+
 	// Default task
 	grunt.registerTask('default', ['jshint']);
-	
-	// Debug task
-	grunt.registerTask('debug', ['watch']);
 };
