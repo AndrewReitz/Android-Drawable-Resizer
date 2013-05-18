@@ -1,7 +1,8 @@
 module.exports = function(grunt) {
+    'use strict';
 
 	// Files to watch and run jshint on
-	var files = ['Gruntfile.js', 'js/*.js'];
+	var files = ['Gruntfile.js', 'src/js/**/*.js'];
 
 	// Project configuration.
 	grunt.initConfig({
@@ -12,7 +13,18 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			files: files
+            grunt: {
+                src: [ "Gruntfile.js" ],
+                options: {
+                    jshintrc: ".jshintrc"
+                }
+            },
+            src: {
+                src: [ 'src/js/*.js', 'src/js/app/*.js' ],
+                options: {
+                    jshintrc: "src/js/.jshintrc"
+                }
+            }
 		}
 	});
 

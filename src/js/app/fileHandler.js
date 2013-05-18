@@ -15,13 +15,18 @@
  *   along with Android-Drawable-Resizer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require.config({
-    paths: {
-        jszip: "lib/jszip/jszip"
-    }
-});
+define(function(){
+    'use strict';
 
-// Start the main app logic.
-requirejs(['app/ready'], function() {
-    alert('hello');
+    var FileHandler = function(file) {
+        var fileReader = new FileReader();
+        fileReader.onload = this.fileReaderLoaded;
+        fileReader.readAsDataURL(file);
+    };
+
+    FileHandler.prototype.fileReaderLoaded = function() {
+
+    };
+
+    return FileHandler;
 });

@@ -15,14 +15,17 @@
  *   along with Android-Drawable-Resizer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-define(function () {
+define(function (require) {
     'use strict';
+
+    var InputFileHandler = require('app/inputFileHandler');
 
     /*
      * Function called when the dom loads from DOMContenetLoaded
+     * Place code here
      */
     function ready() {
-        alert('hello');
+        new InputFileHandler("inputFiles");
     }
 
     /*
