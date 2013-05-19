@@ -8,12 +8,3 @@
  * http://www.wtfpl.net/ for more details.
  *
  */
-
-require.config({
-    paths: {
-        jszip: "lib/jszip/jszip"
-    }
-});
-
-// Start the main app logic.
-requirejs(['app/ready']);

@@ -9,11 +9,10 @@
  *
  */
 
-require.config({
-    paths: {
-        jszip: "lib/jszip/jszip"
-    }
-});
+define(function(){
+    'use strict';
 
-// Start the main app logic.
-requirejs(['app/ready']);
+    var ImageLoader = function() {
+        var image = new Image();
+    };
+});
