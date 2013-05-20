@@ -27,11 +27,11 @@ define(function () {
         }
 
         this._inputImagesElement = inputFilesElement;
-        this._inputImagesElement.onchange = this.onChangeHandler.bind(this);
+        this._inputImagesElement.onchange = this._onChangeHandler.bind(this);
         this.fileLoadedCallback = fileLoadedCallback;
     };
 
-    InputFileHandler.prototype.onChangeHandler = function() {
+    InputFileHandler.prototype._onChangeHandler = function() {
         var inputFiles = this._inputImagesElement.files || [];
 
         for (var i = 0; i < inputFiles.length; i++) {

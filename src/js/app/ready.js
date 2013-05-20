@@ -13,15 +13,21 @@ define(function (require) {
     'use strict';
 
     var InputFileHandler = require('app/inputFileHandler');
+    var FileLoader = require('app/fileLoader');
+    var FileFilter = require('app/fileFilter');
 
-    /*
+    /**
      * Function called when the dom loads from DOMContenetLoaded
      * Place code here
      */
     function ready() {
+        var inputFilesElement = document.getElementById("inputFiles");
+        var fileLoader = new FileLoader(null);
+        var fileFilter = new FileFilter(/^image\//, fileLoader.loadFile);
+        new InputFileHandler(inputFilesElement, fileFilter.checkFile);
     }
 
-    /*
+    /**
      * Unbind the dom load event listener and fire the ready event
      */
     var DOMContentLoaded = function () {
@@ -34,7 +40,7 @@ define(function (require) {
         }
     };
 
-    /*
+    /**
      * Add event listeners for when the dom loads fire DOMContenetLoaded
      * when it does (also checks if DOM is already loaded if it has been just fire the ready function)
      */

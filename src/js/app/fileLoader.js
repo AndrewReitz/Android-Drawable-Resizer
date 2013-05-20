@@ -13,6 +13,12 @@ define(function () {
     'use strict';
 
     var FileLoader = function (fileLoadedCallback) {
+        if (!fileLoadedCallback) {
+            throw new Error("fileLoadedCallback must be defined");
+        } else if (typeof(fileLoadedCallback) !== 'function') {
+            throw new Error("fileLoadedCallback must be a function");
+        }
+
         this._fileLoadedCallback = fileLoadedCallback;
         this._fileReader = new FileReader();
     };
