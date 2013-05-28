@@ -14,7 +14,7 @@ define(function () {
 
     var FileFilter = function (fileTypeRegex, fileMatchedCallback) {
 
-        if(!fileTypeRegex) {
+        if (!fileTypeRegex) {
             throw new Error("fileTypeRegex must be defined");
         } else if (!(fileTypeRegex instanceof RegExp)) {
             throw new Error("fileTypeRegex must be type of RegExp");
@@ -22,7 +22,7 @@ define(function () {
 
         if (!fileMatchedCallback) {
             throw new Error("fileMatchedCallback must be defined");
-        } else if(typeof(fileMatchedCallback) !== 'function') {
+        } else if (typeof(fileMatchedCallback) !== 'function') {
             throw new Error("fileMatchedCallback must be a function");
         }
 
@@ -31,8 +31,16 @@ define(function () {
     };
 
     FileFilter.prototype.checkFile = function (file) {
+        if (!file) {
+            throw new Error("file must be defined");
+        } else if (!(file instanceof Blob)) {
+            throw new Error("file must be an instance of Blob");
+        }
+
         if (!!file.type.toLowerCase().match(this._fileTypeRegex)) {
             this._fileMatchedCallback(file);
         }
     };
+
+    return FileFilter;
 });
