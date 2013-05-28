@@ -14,7 +14,7 @@ define(['app/fileFilter'], function (FileFilter) {
 
     describe('FileFilter', function () {
         var fileFilterImage;
-        var fileFIlterText;
+        var fileFilterText;
         var callbackFile;
 
         var mimeText = { 'type': 'text\/plain'};
@@ -34,14 +34,40 @@ define(['app/fileFilter'], function (FileFilter) {
             };
 
             fileFilterImage = new FileFilter(/^image\//, callback);
-            fileFIlterText = new FileFilter(/text\/plain/, callback);
+            fileFilterText = new FileFilter(/text\/plain/, callback);
             done();
         });
 
-        it('should not call callback', function () {
-            var file = new Blob([], mimeXml);
+        it('should not call callback when mime type does not match', function () {
+            var fileXml = new Blob([], mimeXml);
             fileFilterImage.checkFile(file);
             expect(callbackFile).to.not.be.ok();
+
+            callbackFile = null;
+            file = new Blob([], mimeText);
+            fileFilterImage.checkFile(file);
+            expect(callbackFile).to.not.be.ok();
+
+            callbackFile = null;
+            file = new Blob([], mimeText);
+            fileFilterText.checkFile(file);
+            expect(callbackFile).to.not.be.ok();
+        });
+
+        it('should call callback when mime type matches', function() {
+            var file = new Blob([], mimeImageJpg);
+            fileFilterImage.checkFile(file);
+            expect(callbackFile).to.be.ok();
+
+            callbackFile = null;
+            file = new Blob([], mimeImagePng);
+            fileFilterImage.checkFile(file);
+            expect(callbackFile).to.be.ok();
+
+            callbackFile = null;
+            file = new Blob([], mimeImagePng);
+            fileFilterImage.checkFile(file);
+            expect(callbackFile).to.be.ok();
         });
     });
 });
