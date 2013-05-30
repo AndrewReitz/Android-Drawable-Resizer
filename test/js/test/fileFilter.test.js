@@ -13,61 +13,47 @@ define(['app/fileFilter'], function (FileFilter) {
     'use strict';
 
     describe('FileFilter', function () {
-        var fileFilterImage;
-        var fileFilterText;
-        var callbackFile;
-
         var mimeText = { 'type': 'text\/plain'};
         var mimeImagePng = { 'type': 'image\/png'};
         var mimeImageJpg = { 'type': 'image\/jpeg' };
         var mimeXml = { 'type': 'text\/xml' };
 
-        beforeEach(function (done) {
+        it('should not call callback when mime type does not match', function () {
 
-            var callback = function (file) {
-                if (file != null) {
-                    callbackFile = file;
-                    done();
-                }
-
-                throw new Error('file should not be null');
+            var callback = function(file) {
+                expect(file).to.not.be.ok();
             };
 
-            fileFilterImage = new FileFilter(/^image\//, callback);
-            fileFilterText = new FileFilter(/text\/plain/, callback);
-            done();
-        });
+            var fileFilterImage = new FileFilter(/^image\//, callback);
+            var fileFilterText = new FileFilter(/text\/plain/, callback);
 
-        it('should not call callback when mime type does not match', function () {
             var fileXml = new Blob([], mimeXml);
-            fileFilterImage.checkFile(file);
-            expect(callbackFile).to.not.be.ok();
+            fileFilterImage.checkFile(fileXml);
 
-            callbackFile = null;
-            file = new Blob([], mimeText);
-            fileFilterImage.checkFile(file);
-            expect(callbackFile).to.not.be.ok();
+            var fileText = new Blob([], mimeText);
+            fileFilterImage.checkFile(fileText);
 
-            callbackFile = null;
-            file = new Blob([], mimeText);
-            fileFilterText.checkFile(file);
-            expect(callbackFile).to.not.be.ok();
+            var fileJpg = new Blob([], mimeImageJpg);
+            fileFilterText.checkFile(fileJpg);
         });
 
         it('should call callback when mime type matches', function() {
-            var file = new Blob([], mimeImageJpg);
-            fileFilterImage.checkFile(file);
-            expect(callbackFile).to.be.ok();
+            var callback = function(file) {
+                expect(file).to.be.ok();
+                expect(file).to.be.a(Blob);
+            };
 
-            callbackFile = null;
-            file = new Blob([], mimeImagePng);
-            fileFilterImage.checkFile(file);
-            expect(callbackFile).to.be.ok();
+            var fileFilterImage = new FileFilter(/^image\//, callback);
+            var fileFilterText = new FileFilter(/text\/plain/, callback);
 
-            callbackFile = null;
-            file = new Blob([], mimeImagePng);
-            fileFilterImage.checkFile(file);
-            expect(callbackFile).to.be.ok();
+            var fileJpg = new Blob([], mimeImageJpg);
+            fileFilterImage.checkFile(fileJpg);
+
+            var filePng = new Blob([], mimeImagePng);
+            fileFilterImage.checkFile(filePng);
+
+            var fileText = new Blob([], mimeText);
+            fileFilterText.checkFile(fileText);
         });
     });
 });

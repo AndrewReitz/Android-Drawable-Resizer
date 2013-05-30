@@ -24,7 +24,8 @@ requirejs(["node_modules/mocha/mocha",
         mocha.setup('bdd');
 
         require([
-            'test/fileFilter.test'
+            'test/fileFilter.test',
+            'test/fileLoader.test'
         ], function () {
             mocha.run();
         });

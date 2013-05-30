@@ -23,7 +23,13 @@ define(function () {
         this._fileReader = new FileReader();
     };
 
-    FileReader.prototype.loadFile = function (file) {
+    FileLoader.prototype.loadFile = function (file) {
+        if (!file) {
+            throw new Error("file must be defined");
+        } else if (!(file instanceof Blob)) {
+            throw new Error("file must be and instance of Blob");
+        }
+
         this._fileReader.onload = this._fileReaderLoaded.bind(this);
         this._fileReader.readAsDataURL(file);
     };

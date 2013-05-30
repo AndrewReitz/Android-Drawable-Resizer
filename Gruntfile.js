@@ -20,7 +20,6 @@ module.exports = function (grunt) {
                 }
             },
             src: {
-                // no lint on tests since mocha and require really screw things up...
                 src: [ 'src/js/*.js', 'src/js/app/*.js' ],
                 options: {
                     jshintrc: "src/js/.jshintrc"
