@@ -17,13 +17,20 @@ define(['app/inputFileHandler'], function (InputFileHandler) {
             var element = document.createElement('input');
             element.type = 'file';
 
-            var callback = function() {
+            var inputFIleHandler = new InputFileHandler(element, function() {});
 
+            inputFIleHandler._fileLoadedCallback = function() {
+                throw new Error('Should not be run');
             };
-
-            var inputFIleHandler = new InputFileHandler();
-
             inputFIleHandler._inputImagesElement.files = [];
+            inputFIleHandler._onChangeHandler();
+
+            // TODO figure out how to check how many times this was called
+            inputFIleHandler._fileLoadedCallback = function(val) {
+                expect(val).to.be(1);
+            };
+            inputFIleHandler._inputImagesElement.files = [1,1,1,1,1];
+            inputFIleHandler._onChangeHandler();
         });
     });
 });

@@ -25,7 +25,8 @@ requirejs(["node_modules/mocha/mocha",
 
         require([
             'test/fileFilter.test',
-            'test/fileLoader.test'
+            'test/fileLoader.test',
+            'test/inputFileHandler.test'
         ], function () {
             mocha.run();
         });

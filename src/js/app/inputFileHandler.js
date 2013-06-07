@@ -28,14 +28,14 @@ define(function () {
 
         this._inputImagesElement = inputFilesElement;
         this._inputImagesElement.onchange = this._onChangeHandler.bind(this);
-        this.fileLoadedCallback = fileLoadedCallback;
+        this._fileLoadedCallback = fileLoadedCallback;
     };
 
     InputFileHandler.prototype._onChangeHandler = function() {
         var inputFiles = this._inputImagesElement.files || [];
 
         for (var i = 0; i < inputFiles.length; i++) {
-            this.fileLoadedCallback(inputFiles[i]);
+            this._fileLoadedCallback(inputFiles[i]);
         }
     };
 
