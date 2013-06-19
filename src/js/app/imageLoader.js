@@ -12,7 +12,14 @@
 define(function(){
     'use strict';
 
-    var ImageLoader = function() {
-        var image = new Image();
+    var ImageLoader = function(dataUrl, density) {
+        this._image = new Image();
+        this._image.src = dataUrl;
     };
+
+    ImageLoader.prototype._onLoadComplete = function() {
+
+    };
+
+    return ImageLoader;
 });
