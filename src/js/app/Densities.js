@@ -14,8 +14,8 @@ define(function(){
 
     var Densities = {
         XHDPI: 1,
-        HDPI: 2,
-        MDPI: 3
+        HDPI: 0.75,
+        MDPI: 0.5
     };
 
     Object.freeze(Densities);

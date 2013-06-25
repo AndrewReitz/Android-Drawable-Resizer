@@ -12,9 +12,23 @@
 define(function(){
     'use strict';
 
-    var ImageLoader = function(dataUrl, density) {
+    var ImageLoader = function(numberOfImages) {
+
+        if (numberOfImages) {
+            throw new Error("numberOfImages can not be null");
+        } else if(typeof(numberOfImages) !== 'number') {
+            throw new TypeError("numberOfImages must be a number");
+        }
+
+        this._numberOfImages = numberOfImages;
+        this._androidAssets = [];
+    };
+
+    ImageLoader.prototype.loadImage = function(dataUrl, density) {
         this._image = new Image();
         this._image.src = dataUrl;
+
+        this._density = density;
     };
 
     ImageLoader.prototype._onLoadComplete = function() {
