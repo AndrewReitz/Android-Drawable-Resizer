@@ -10,7 +10,7 @@
  */
 
 
-define(function(){
+define(function(require){
     'use strict';
 
     var Densities = require('app/densities');
