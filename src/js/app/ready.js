@@ -15,6 +15,8 @@ define(function (require) {
     var InputFileHandler = require('app/inputFileHandler');
     var FileLoader = require('app/fileLoader');
     var FileFilter = require('app/fileFilter');
+    var ImageLoader = require('app/imageLoader');
+    var FileZipper = require('app/fileZipper');
 
     /**
      * Function called when the dom loads from DOMContenetLoaded
@@ -22,9 +24,12 @@ define(function (require) {
      */
     function ready() {
         var inputFilesElement = document.getElementById("inputFiles");
-        var fileLoader = new FileLoader(null);
+
+        var fileZipper = new FileZipper();
+        var imageLoader = new ImageLoader(fileZipper.zip);
+        var fileLoader = new FileLoader(imageLoader.loadImage);
         var fileFilter = new FileFilter(/^image\//, fileLoader.loadFile);
-        new InputFileHandler(inputFilesElement, fileFilter.checkFile);
+        new InputFileHandler(inputFilesElement, fileFilter.checkFile, imageLoader);
     }
 
     /**

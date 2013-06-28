@@ -14,37 +14,66 @@ define(function(require){
 
     var AndroidAsset = require('app/androidAsset');
 
-    var ImageLoader = function(density, numberOfImages) {
+    var ImageLoader = function(callback) {
 
-        if (density) {
-            throw new Error("density can not be null");
-        } else if (typeof(density) !== 'number') {
-            throw new TypeError("density must be a number");
+        if (!callback) {
+            throw new Error("callback can not be null");
+        } else if (typeof(callback) !== 'function') {
+            throw new TypeError("callback must be a function")
         }
 
-        if (numberOfImages) {
+        this._callback = callback;
+        this._imageHolder = [];
+        this._imageCount = 0;
+    };
+
+    ImageLoader.prototype.setNumberOfImages = function(numberOfImages) {
+        if (!numberOfImages) {
             throw new Error("numberOfImages can not be null");
         } else if(typeof(numberOfImages) !== 'number') {
             throw new TypeError("numberOfImages must be a number");
         }
 
         this._numberOfImages = numberOfImages;
-        //TODO make the size of numberOfImages;
-        this._androidAssets = [];
+    };
+
+    ImageLoader.prototype.setDensity = function(density) {
+        if (!density) {
+            throw new Error("density can not be null");
+        } else if (typeof(density) !== 'number') {
+            throw new TypeError("density must be a number");
+        }
+
+        this._density = density;
     };
 
     ImageLoader.prototype.loadImage = function(dataUrl) {
-        //TODO load each image calling onLoadComplete
-        //passing all the images to an array
-        //TODO make another array in constructor
+
+        if (!this._density) {
+            throw new Error("setDensity must be called before loadImage can be called");
+        }
+
+        if (!this._numberOfImages) {
+            throw new Error("setNumberOfImages must be called before loadImage can be called");
+        }
+
         var image = new Image();
-        image = this._onLoadComplete();
+        image.onload = this._onLoadComplete.bind(this);
         image.src = dataUrl;
+        this._imageHolder.push(image);
     };
 
     ImageLoader.prototype._onLoadComplete = function() {
-        //TODO check to see all images are loaded, if they are loop
-        // through them, convert them to androidasset then call a callback to notify they are all completed
+        var androidAssets = [];
+
+        if(this._numberOfImages === this._imageCount) {
+            for(var i = 0; i < this._imageHolder; i++) {
+                var asset = new AndroidAsset(this._imageHolder[i], this._density);
+                androidAssets.push(asset);
+            }
+
+            this._callback(androidAssets);
+        }
     };
 
     return ImageLoader;

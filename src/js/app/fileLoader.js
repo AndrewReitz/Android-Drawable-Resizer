@@ -35,7 +35,7 @@ define(function () {
     };
 
     FileLoader.prototype._fileReaderLoaded = function () {
-        this._fileLoadedCallback(this._fileReader);
+        this._fileLoadedCallback(this._fileReader.result);
     };
 
     return FileLoader;

@@ -3,110 +3,110 @@
 </head>
 <body>
 <input id="inputFiles" type="file" accept="image/*" multiple="true"/>
-<script>
-    (function (window, undefined) {
-        'use strict';
+<!--<script>-->
+    <!--(function (window, undefined) {-->
+        <!--'use strict';-->
 
-        var images = [];
+        <!--var images = [];-->
 
-        var fileCount = 0;
-        var filesCompleted = 0;
+        <!--var fileCount = 0;-->
+        <!--var filesCompleted = 0;-->
 
-        var inputFiles = document.getElementById("inputFiles");
+        <!--var inputFiles = document.getElementById("inputFiles");-->
 
-        var notifyComplete = function () {
-            filesCompleted++;
+        <!--var notifyComplete = function () {-->
+            <!--filesCompleted++;-->
 
-            // if 0 or null or anything bad
-            if (!fileCount) {
-                console.error("fileCount is " + fileCount);
-                return;
-            }
+            <!--// if 0 or null or anything bad-->
+            <!--if (!fileCount) {-->
+                <!--console.error("fileCount is " + fileCount);-->
+                <!--return;-->
+            <!--}-->
 
-            if (filesCompleted === fileCount) {
-                var zip = new JSZip();
-                var res = zip.folder("res");
-                var xhdpi = res.folder("xhdpi");
-                var hdpi = res.folder("hdpi");
-                var mdpi = res.folder("mdpi");
+            <!--if (filesCompleted === fileCount) {-->
+                <!--var zip = new JSZip();-->
+                <!--var res = zip.folder("res");-->
+                <!--var xhdpi = res.folder("xhdpi");-->
+                <!--var hdpi = res.folder("hdpi");-->
+                <!--var mdpi = res.folder("mdpi");-->
 
-                for (var i = 0; i < images.length; i++) {
-                    var image = images[i];
-                    var name = image.name.replace("jpg", "png");
+                <!--for (var i = 0; i < images.length; i++) {-->
+                    <!--var image = images[i];-->
+                    <!--var name = image.name.replace("jpg", "png");-->
 
-                    xhdpi.file(name, image.xhdpi.split(',')[1], {base64: true});
-                    hdpi.file(name, image.hdpi.split(',')[1], {base64: true});
-                    mdpi.file(name, image.mdpi.split(',')[1], {base64: true});
-                }
+                    <!--xhdpi.file(name, image.xhdpi.split(',')[1], {base64: true});-->
+                    <!--hdpi.file(name, image.hdpi.split(',')[1], {base64: true});-->
+                    <!--mdpi.file(name, image.mdpi.split(',')[1], {base64: true});-->
+                <!--}-->
 
-                var content = zip.generate({type: "blob"});
+                <!--var content = zip.generate({type: "blob"});-->
 
-                var myLink = document.createElement('a');
-                document.body.appendChild(myLink);
-                myLink.href = window.URL.createObjectURL(content);
-                myLink.download = "AndroidAssets.zip";
-                myLink.click();
+                <!--var myLink = document.createElement('a');-->
+                <!--document.body.appendChild(myLink);-->
+                <!--myLink.href = window.URL.createObjectURL(content);-->
+                <!--myLink.download = "AndroidAssets.zip";-->
+                <!--myLink.click();-->
 
-                inputFiles.files = [];
-            }
-        };
+                <!--inputFiles.files = [];-->
+            <!--}-->
+        <!--};-->
 
-        var createNewImage = function (image, scaleFactor) {
-            scaleFactor = scaleFactor || 1;
+        <!--var createNewImage = function (image, scaleFactor) {-->
+            <!--scaleFactor = scaleFactor || 1;-->
 
-            var width = image.width * scaleFactor;
-            var height = image.height * scaleFactor;
+            <!--var width = image.width * scaleFactor;-->
+            <!--var height = image.height * scaleFactor;-->
 
-            var canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
+            <!--var canvas = document.createElement('canvas');-->
+            <!--canvas.width = width;-->
+            <!--canvas.height = height;-->
 
-            var ctx = canvas.getContext('2d');
-            ctx.drawImage(image, 0, 0, width, height);
+            <!--var ctx = canvas.getContext('2d');-->
+            <!--ctx.drawImage(image, 0, 0, width, height);-->
 
-            return canvas.toDataURL("image/png");
-        };
+            <!--return canvas.toDataURL("image/png");-->
+        <!--};-->
 
-        var imageOnload = function () {
-            // assume at this point image is xhdpi
-            var xhdpi = createNewImage(this);
-            var hdpi = createNewImage(this, 0.75);
-            var mdpi = createNewImage(this, 0.5);
-            var name = this.alt;
+        <!--var imageOnload = function () {-->
+            <!--// assume at this point image is xhdpi-->
+            <!--var xhdpi = createNewImage(this);-->
+            <!--var hdpi = createNewImage(this, 0.75);-->
+            <!--var mdpi = createNewImage(this, 0.5);-->
+            <!--var name = this.alt;-->
 
-            images.push({
-                name: name,
-                xhdpi: xhdpi,
-                hdpi: hdpi,
-                mdpi: mdpi
-            });
+            <!--images.push({-->
+                <!--name: name,-->
+                <!--xhdpi: xhdpi,-->
+                <!--hdpi: hdpi,-->
+                <!--mdpi: mdpi-->
+            <!--});-->
 
-            notifyComplete();
-        };
+            <!--notifyComplete();-->
+        <!--};-->
 
-        var fileReaderOnload = function () {
-            var img = new Image();
-            img.onload = imageOnload;
-            img.alt = this.name;
-            img.src = this.result;
-        };
+        <!--var fileReaderOnload = function () {-->
+            <!--var img = new Image();-->
+            <!--img.onload = imageOnload;-->
+            <!--img.alt = this.name;-->
+            <!--img.src = this.result;-->
+        <!--};-->
 
-        inputFiles.onchange = function () {
-            var inputFiles = this.files || [];
-            fileCount = inputFiles.length;
+        <!--inputFiles.onchange = function () {-->
+            <!--var inputFiles = this.files || [];-->
+            <!--fileCount = inputFiles.length;-->
 
-            for (var i = 0; i < inputFiles.length; i++) {
-                var file = inputFiles[i];
-                if (!!file.type.toLowerCase().match(/^image\//)) {
-                    var fileReader = new FileReader();
-                    fileReader.onload = fileReaderOnload;
-                    fileReader.name = file.name;
-                    fileReader.readAsDataURL(file);
-                }
-            }
-        };
-    }(window));
-</script>
+            <!--for (var i = 0; i < inputFiles.length; i++) {-->
+                <!--var file = inputFiles[i];-->
+                <!--if (!!file.type.toLowerCase().match(/^image\//)) {-->
+                    <!--var fileReader = new FileReader();-->
+                    <!--fileReader.onload = fileReaderOnload;-->
+                    <!--fileReader.name = file.name;-->
+                    <!--fileReader.readAsDataURL(file);-->
+                <!--}-->
+            <!--}-->
+        <!--};-->
+    <!--}(window));-->
+<!--</script>-->
 <script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
 </body>
 </html>

@@ -9,10 +9,13 @@
  *
  */
 
-define(function () {
+define(function (require) {
     'use strict';
 
-    var InputFileHandler = function(inputFilesElement, fileLoadedCallback) {
+    var ImageLoader = require('app/imageLoader');
+    var Densities = require('app/densities');
+
+    var InputFileHandler = function(inputFilesElement, fileLoadedCallback, imageLoader) {
 
         if (!inputFilesElement) {
             throw new Error("inputFilesElement can not be null");
@@ -26,6 +29,11 @@ define(function () {
             throw new Error("fileLoadedCallback must be a function");
         }
 
+        if (imageLoader && !(imageLoader instanceof(ImageLoader))) {
+            throw new TypeError("imageLoader must be an instance of ImageLoader")
+        }
+
+        this._imageLoader = imageLoader;
         this._inputImagesElement = inputFilesElement;
         this._inputImagesElement.onchange = this._onChangeHandler.bind(this);
         this._fileLoadedCallback = fileLoadedCallback;
@@ -34,8 +42,12 @@ define(function () {
     InputFileHandler.prototype._onChangeHandler = function() {
         var inputFiles = this._inputImagesElement.files || [];
 
+        // TODO get density from drop down
+        this._imageLoader.setDensity(Densities.XHDPI);
+        this._imageLoader.setNumberOfImages(inputFiles.length);
+
         for (var i = 0; i < inputFiles.length; i++) {
-            this._fileLoadedCallback(inputFiles[i]);
+            this._fileLoadedCallback(inputFiles[i]).bind(this._fileLoadedCallback);
         }
     };
 
