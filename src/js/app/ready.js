@@ -26,10 +26,10 @@ define(function (require) {
         var inputFilesElement = document.getElementById("inputFiles");
 
         var fileZipper = new FileZipper();
-        var imageLoader = new ImageLoader(fileZipper.zip);
-        var fileLoader = new FileLoader(imageLoader.loadImage);
-        var fileFilter = new FileFilter(/^image\//, fileLoader.loadFile);
-        new InputFileHandler(inputFilesElement, fileFilter.checkFile, imageLoader);
+        var imageLoader = new ImageLoader(fileZipper.zip.bind(fileZipper));
+        var fileLoader = new FileLoader(imageLoader.loadImage.bind(imageLoader));
+        var fileFilter = new FileFilter(/^image\//, fileLoader.loadFile.bind(fileLoader));
+        new InputFileHandler(inputFilesElement, fileFilter.checkFile.bind(fileFilter), imageLoader);
     }
 
     /**

@@ -30,12 +30,13 @@ define(function () {
             throw new Error("file must be and instance of Blob");
         }
 
+        this._file = file;
         this._fileReader.onload = this._fileReaderLoaded.bind(this);
         this._fileReader.readAsDataURL(file);
     };
 
     FileLoader.prototype._fileReaderLoaded = function () {
-        this._fileLoadedCallback(this._fileReader.result);
+        this._fileLoadedCallback(this._fileReader.result, this._file.name);
     };
 
     return FileLoader;

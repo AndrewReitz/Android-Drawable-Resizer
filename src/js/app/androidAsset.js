@@ -42,13 +42,19 @@ define(function(require){
                 throw new Error('Unknown density');
         }
 
+        this.name = image.name;
         this.xhdpi = xhdpi;
         this.hdpi = hdpi;
         this.mdpi = mdpi;
     };
 
     AndroidAsset.prototype.getAssets = function() {
-        return [this.mdpi, this.hdpi, this.xhdpi];
+        return {
+            name: this.name,
+            mdpi: this.mdpi,
+            hdpi: this.hdpi,
+            xhdpi: this.xhdpi
+        };
     };
 
     AndroidAsset.prototype._createNewImage = function(image, scale) {
@@ -64,4 +70,6 @@ define(function(require){
 
         return canvas.toDataURL('image/png');
     };
+
+    return AndroidAsset;
 });

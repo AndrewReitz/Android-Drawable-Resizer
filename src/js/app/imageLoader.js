@@ -19,7 +19,7 @@ define(function(require){
         if (!callback) {
             throw new Error("callback can not be null");
         } else if (typeof(callback) !== 'function') {
-            throw new TypeError("callback must be a function")
+            throw new TypeError("callback must be a function");
         }
 
         this._callback = callback;
@@ -47,7 +47,7 @@ define(function(require){
         this._density = density;
     };
 
-    ImageLoader.prototype.loadImage = function(dataUrl) {
+    ImageLoader.prototype.loadImage = function(dataUrl, filename) {
 
         if (!this._density) {
             throw new Error("setDensity must be called before loadImage can be called");
@@ -58,16 +58,19 @@ define(function(require){
         }
 
         var image = new Image();
+        image.name = filename;
+        this._imageHolder.push(image);
         image.onload = this._onLoadComplete.bind(this);
         image.src = dataUrl;
-        this._imageHolder.push(image);
     };
 
     ImageLoader.prototype._onLoadComplete = function() {
         var androidAssets = [];
+        this._imageCount = this._imageCount + 1;
+
 
         if(this._numberOfImages === this._imageCount) {
-            for(var i = 0; i < this._imageHolder; i++) {
+            for(var i = 0; i < this._imageHolder.length; i++) {
                 var asset = new AndroidAsset(this._imageHolder[i], this._density);
                 androidAssets.push(asset);
             }

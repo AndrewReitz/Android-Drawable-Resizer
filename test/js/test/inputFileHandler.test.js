@@ -9,20 +9,26 @@
  *
  */
 
-define(['app/inputFileHandler'], function (InputFileHandler) {
+define(['app/inputFileHandler', 'app/imageLoader'], function (InputFileHandler, ImageLoader) {
     'use strict';
 
     describe('InputFileHandler', function() {
         it('should call callback once per file', function() {
+
             var element = document.createElement('input');
             element.type = 'file';
 
-            var inputFileHandler = new InputFileHandler(element, function() {});
+            // mock image loader
+            ImageLoader.prototype.setDensity = function() {};
+            ImageLoader.prototype.setNumberOfImages = function() {};
+
+            var inputFileHandler = new InputFileHandler(element, function() {}, new ImageLoader(function() {}));
 
             inputFileHandler._fileLoadedCallback = function() {
                 throw new Error('Should not be run');
             };
             inputFileHandler._inputImagesElement.files = [];
+
             inputFileHandler._onChangeHandler();
 
             // TODO figure out how to check how many times this was called

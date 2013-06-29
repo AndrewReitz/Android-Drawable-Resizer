@@ -9,36 +9,42 @@
  *
  */
 
-define(['jszip'], function () {
+define(['jszip/jszip'], function () {
     'use strict';
-
     var FileZipper = function() {
 
     };
 
-    FileZipper.prototype.zip = function() {
+    FileZipper.prototype.zip = function(androidAssets) {
         var zip = new JSZip();
         var res = zip.folder("res");
         var xhdpi = res.folder("xhdpi");
         var hdpi = res.folder("hdpi");
         var mdpi = res.folder("mdpi");
 
-        for (var i = 0; i < images.length; i++) {
-            var image = images[i];
-            var name = image.name.replace("jpg", "png");
+        for (var i = 0; i < androidAssets.length; i++) {
+            var asset = androidAssets[i].getAssets();
 
-            xhdpi.file(name, image.xhdpi.split(',')[1], {base64: true});
-            hdpi.file(name, image.hdpi.split(',')[1], {base64: true});
-            mdpi.file(name, image.mdpi.split(',')[1], {base64: true});
+            //if it was a jpg, it's a png now
+            var name = asset.name.replace("jpg", "png");
+
+            // split at the , and get the first element because of extra garbage tacked
+            // onto the beginning
+            xhdpi.file(name, asset.xhdpi.split(',')[1], {base64: true});
+            hdpi.file(name, asset.hdpi.split(',')[1], {base64: true});
+            mdpi.file(name, asset.mdpi.split(',')[1], {base64: true});
         }
 
         var content = zip.generate({type: "blob"});
 
+        // hack to get element to download
         var myLink = document.createElement('a');
         document.body.appendChild(myLink);
         myLink.href = window.URL.createObjectURL(content);
         myLink.download = "AndroidAssets.zip";
         myLink.click();
+
+        // TODO delete mylink so that this can be run multiple times
     };
 
     return FileZipper;

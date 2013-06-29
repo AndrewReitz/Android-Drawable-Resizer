@@ -30,7 +30,7 @@ define(function (require) {
         }
 
         if (imageLoader && !(imageLoader instanceof(ImageLoader))) {
-            throw new TypeError("imageLoader must be an instance of ImageLoader")
+            throw new TypeError("imageLoader must be an instance of ImageLoader");
         }
 
         this._imageLoader = imageLoader;
@@ -47,7 +47,7 @@ define(function (require) {
         this._imageLoader.setNumberOfImages(inputFiles.length);
 
         for (var i = 0; i < inputFiles.length; i++) {
-            this._fileLoadedCallback(inputFiles[i]).bind(this._fileLoadedCallback);
+            this._fileLoadedCallback(inputFiles[i]);
         }
     };
 
