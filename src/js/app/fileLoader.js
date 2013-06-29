@@ -20,7 +20,6 @@ define(function () {
         }
 
         this._fileLoadedCallback = fileLoadedCallback;
-        this._fileReader = new FileReader();
     };
 
     FileLoader.prototype.loadFile = function (file) {
@@ -30,13 +29,18 @@ define(function () {
             throw new Error("file must be and instance of Blob");
         }
 
-        this._file = file;
-        this._fileReader.onload = this._fileReaderLoaded.bind(this);
-        this._fileReader.readAsDataURL(file);
+        var fileReader = new FileReader();
+        fileReader.onload = this._fileReaderLoaded.bind(
+            {
+                fileName: file.name,
+                callback: this._fileLoadedCallback,
+                fileReader: fileReader
+            });
+        fileReader.readAsDataURL(file);
     };
 
     FileLoader.prototype._fileReaderLoaded = function () {
-        this._fileLoadedCallback(this._fileReader.result, this._file.name);
+        this.callback(this.fileReader.result, this.fileName);
     };
 
     return FileLoader;
