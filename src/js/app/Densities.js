@@ -12,6 +12,11 @@
 define(function(){
     'use strict';
 
+    /**
+     * Enumeration for different densities
+     * These numbers should not be used for calculations
+     * @type {{XHDPI: number, HDPI: number, MDPI: number}}
+     */
     var Densities = {
         XHDPI: 1,
         HDPI: 0.75,

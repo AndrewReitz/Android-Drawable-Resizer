@@ -12,6 +12,13 @@
 define(function () {
     'use strict';
 
+    /**
+     * FileFilter filter files against a regular expression and call the call back with them
+     * @param {RegExp} fileTypeRegex Regular Expression to check file against
+     * @param {function} fileMatchedCallback callback that is called when a file is found to match
+     * the regular expression
+     * @constructor
+     */
     var FileFilter = function (fileTypeRegex, fileMatchedCallback) {
 
         if (!fileTypeRegex) {
@@ -30,6 +37,11 @@ define(function () {
         this._fileMatchedCallback = fileMatchedCallback;
     };
 
+    /**
+     * Checks a file against the regular expression that was passed in to the constructor.
+     * If a file matches the callback passed into the constructor is called
+     * @param file {File} file to be checked against the regular expression
+     */
     FileFilter.prototype.checkFile = function (file) {
         if (!file) {
             throw new Error("file must be defined");
