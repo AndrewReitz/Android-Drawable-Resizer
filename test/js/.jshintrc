@@ -1,0 +1,11 @@
+{
+    "browser": true,
+    "globals": {
+        "mocha": true,
+        "require": true,
+        "describe": true,
+        "it": true,
+        "expect": true,
+        "beforeEach": true
+    }
+}

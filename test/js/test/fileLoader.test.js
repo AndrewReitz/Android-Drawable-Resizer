@@ -34,14 +34,14 @@ define(['app/fileLoader'], function (FileLoader) {
 
             var error;
             try {
-                fileLoader.loadFile({})
+                fileLoader.loadFile({});
             } catch(e) {
                 error = e;
             }
             expect(error).to.be.ok();
 
             try {
-                fileLoader.loadFile(6)
+                fileLoader.loadFile(6);
             } catch(e) {
                 error = e;
             }

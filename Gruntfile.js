@@ -14,15 +14,21 @@ module.exports = function (grunt) {
         },
         jshint: {
             grunt: {
-                src: [ "Gruntfile.js" ],
+                src: [ 'Gruntfile.js' ],
                 options: {
-                    jshintrc: ".jshintrc"
+                    jshintrc: '.jshintrc'
                 }
             },
             src: {
                 src: [ 'src/js/*.js', 'src/js/app/*.js' ],
                 options: {
-                    jshintrc: "src/js/.jshintrc"
+                    jshintrc: 'src/js/.jshintrc'
+                }
+            },
+            test: {
+                src: [ 'test/js/*.js', 'test/js/test/*.js' ],
+                options: {
+                    jshintrc: 'test/js/.jshintrc'
                 }
             }
         }

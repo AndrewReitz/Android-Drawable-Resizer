@@ -36,7 +36,7 @@ define(['app/androidDrawable', 'app/densities'], function (AndroidDrawable, Dens
             it('should throw an Error if density is not a valid density', function() {
                 expect(
                     function() {
-                        new AndroidDrawable(new Image(), 10)
+                        new AndroidDrawable(new Image(), 10);
                     }
                 ).to.throwError();
             });
@@ -64,6 +64,10 @@ define(['app/androidDrawable', 'app/densities'], function (AndroidDrawable, Dens
                 var asset = drawable.getDrawable();
                 expect(asset.name).to.be.eql(imageName);
             });
+        });
+
+        describe('#_createNewImage', function() {
+
         });
     });
 });
