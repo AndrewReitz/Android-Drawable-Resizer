@@ -15,7 +15,20 @@ define(function(require){
 
     var Densities = require('app/densities');
 
-    var AndroidAsset = function(image, density) {
+    /**
+     *
+     * @param image Image the AndroidDrawable represents
+     * @param density
+     * @constructor
+     */
+    var AndroidDrawable = function(image, density) {
+
+        if (!image) {
+            throw new TypeError('image can not be null');
+        } else if (!(image instanceof Image)) {
+            throw new TypeError('image must be an Image');
+        }
+
         this._density = density;
 
         var xhdpi;
@@ -48,7 +61,7 @@ define(function(require){
         this.mdpi = mdpi;
     };
 
-    AndroidAsset.prototype.getAssets = function() {
+    AndroidDrawable.prototype.getDrawable = function() {
         return {
             name: this.name,
             mdpi: this.mdpi,
@@ -57,7 +70,14 @@ define(function(require){
         };
     };
 
-    AndroidAsset.prototype._createNewImage = function(image, scale) {
+    /**
+     * Takes an Image and scales it based on the scale value provided.
+     * @param {Image} image Image to be resized
+     * @param {Number} scale The scale up or down of the image
+     * @returns {string} Base64 encoded image using toDataURL
+     * @private
+     */
+    AndroidDrawable.prototype._createNewImage = function(image, scale) {
         var width = Math.floor(image.width * scale);
         var height = Math.floor(image.height * scale);
 
@@ -71,5 +91,5 @@ define(function(require){
         return canvas.toDataURL('image/png');
     };
 
-    return AndroidAsset;
+    return AndroidDrawable;
 });

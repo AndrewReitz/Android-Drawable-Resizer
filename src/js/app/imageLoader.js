@@ -12,7 +12,7 @@
 define(function(require){
     'use strict';
 
-    var AndroidAsset = require('app/androidAsset');
+    var AndroidAsset = require('app/androidDrawable');
 
     var ImageLoader = function(callback) {
 

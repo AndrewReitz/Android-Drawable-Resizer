@@ -24,6 +24,7 @@ requirejs(["node_modules/mocha/mocha",
         mocha.setup('bdd');
 
         require([
+            'test/androidDrawable.test',
             'test/fileFilter.test',
             'test/fileLoader.test',
             'test/inputFileHandler.test'

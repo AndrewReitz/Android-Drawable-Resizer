@@ -23,7 +23,7 @@ define(['jszip/jszip'], function () {
         var mdpi = res.folder("mdpi");
 
         for (var i = 0; i < androidAssets.length; i++) {
-            var asset = androidAssets[i].getAssets();
+            var asset = androidAssets[i].getDrawable();
 
             //if it was a jpg, it's a png now
             var name = asset.name.replace("jpg", "png");
