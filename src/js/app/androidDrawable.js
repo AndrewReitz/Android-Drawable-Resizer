@@ -16,7 +16,8 @@ define(function(require){
     var Densities = require('app/densities');
 
     /**
-     *
+     * AndroidDrawable takes in an image and the density of the image
+     * to create three new images for xhdpi, hdpi, and mdpi
      * @param image Image the AndroidDrawable represents
      * @param density
      * @constructor
@@ -61,6 +62,10 @@ define(function(require){
         this.mdpi = mdpi;
     };
 
+    /**
+     * Get's the name and resized assets as base64 encoded strings
+     * @returns {{name: {string}, mdpi: {string}, hdpi: {string}, xhdpi: {string}}}
+     */
     AndroidDrawable.prototype.getDrawable = function() {
         return {
             name: this.name,
