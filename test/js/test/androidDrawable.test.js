@@ -79,25 +79,21 @@ define(['app/androidDrawable', 'app/densities'], function (AndroidDrawable, Dens
         });
 
         describe('#_createNewImage', function() {
-            var testImageString = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS8AAAEvCAIAAACbvNCPAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAEiSURBVHhe7cEBDQAAAMKg909tDjcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAUzU1TgABMjs7EgAAAABJRU5ErkJggg==";
-            var imageSize = 300;
-            var drawable;
-            var image;
-            beforeEach(function(){
-                image = new Image();
-                image.src = testImageString;
-                image.height = imageSize;
-                image.width = imageSize;
+            var TEST_IMAGE_STRING = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS8AAAEvCAIAAACbvNCPAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAEiSURBVHhe7cEBDQAAAMKg909tDjcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAUzU1TgABMjs7EgAAAABJRU5ErkJggg==";
+            var IMAGE_SIZE = 300;
+            var image = new Image();
+            image.src = TEST_IMAGE_STRING;
+            image.height = IMAGE_SIZE;
+            image.width = IMAGE_SIZE;
 
-                drawable = new AndroidDrawable(new Image(), Densities.XHDPI);
-            });
+            var drawable = new AndroidDrawable(new Image(), Densities.XHDPI);
 
             it('scale of 1 should return the same height and width that was passed in', function(done){
                 var imgSrc = drawable._createNewImage(image, 1);
                 var img = new Image();
                 img.onload = function() {
-                    expect(this.width).to.be(imageSize);
-                    expect(this.height).to.be(imageSize);
+                    expect(this.width).to.be(IMAGE_SIZE);
+                    expect(this.height).to.be(IMAGE_SIZE);
                     done();
                 };
                 img.src = imgSrc;
@@ -107,8 +103,8 @@ define(['app/androidDrawable', 'app/densities'], function (AndroidDrawable, Dens
                 var imgSrc = drawable._createNewImage(image, 0.5);
                 var img = new Image();
                 img.onload = function() {
-                    expect(this.width).to.be(imageSize * 0.5);
-                    expect(this.height).to.be(imageSize * 0.5);
+                    expect(this.width).to.be(IMAGE_SIZE * 0.5);
+                    expect(this.height).to.be(IMAGE_SIZE * 0.5);
                     done();
                 };
                 img.src = imgSrc;
@@ -118,8 +114,8 @@ define(['app/androidDrawable', 'app/densities'], function (AndroidDrawable, Dens
                 var imgSrc = drawable._createNewImage(image, 2);
                 var img = new Image();
                 img.onload = function() {
-                    expect(this.width).to.be(imageSize * 2);
-                    expect(this.height).to.be(imageSize * 2);
+                    expect(this.width).to.be(IMAGE_SIZE * 2);
+                    expect(this.height).to.be(IMAGE_SIZE * 2);
                     done();
                 };
                 img.src = imgSrc;

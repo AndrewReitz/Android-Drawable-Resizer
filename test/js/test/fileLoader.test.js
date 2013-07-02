@@ -13,39 +13,35 @@ define(['app/fileLoader'], function (FileLoader) {
     'use strict';
 
     describe('FileLoader', function () {
-        it('should callback with fileReader', function() {
 
-            var callback = function(fileReader) {
-                expect(fileReader).to.be.ok();
-                expect(fileReader).to.be.a(FileReader);
-            };
+        describe('#loadFile', function () {
+            it('should callback with fileReader', function () {
 
-            var fileLoader = new FileLoader(callback);
-            var file = new Blob();
-            fileLoader.loadFile(file);
-        });
+                var callback = function (fileReader) {
+                    expect(fileReader).to.be.ok();
+                    expect(fileReader).to.be.a(FileReader);
+                };
 
-        it('should throw error when called with wrong type', function() {
-            var callback = function(fileReader) {
-                expect(fileReader).to.not.be.ok();
-            };
+                var fileLoader = new FileLoader(callback);
+                var file = new Blob();
+                fileLoader.loadFile(file);
+            });
 
-            var fileLoader = new FileLoader(callback);
+            it('should throw error when called with wrong type', function () {
+                var callback = function (fileReader) {
+                    expect(fileReader).to.not.be.ok();
+                };
 
-            var error;
-            try {
-                fileLoader.loadFile({});
-            } catch(e) {
-                error = e;
-            }
-            expect(error).to.be.ok();
+                var fileLoader = new FileLoader(callback);
 
-            try {
-                fileLoader.loadFile(6);
-            } catch(e) {
-                error = e;
-            }
-            expect(error).to.be.ok();
+                expect(function () {
+                    fileLoader.loadFile({});
+                }).to.throwError();
+
+                expect(function () {
+                    fileLoader.loadFile(6);
+                }).to.throwError();
+            });
         });
     });
 });

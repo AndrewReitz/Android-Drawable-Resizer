@@ -24,13 +24,13 @@ define(function () {
         if (!fileTypeRegex) {
             throw new Error("fileTypeRegex must be defined");
         } else if (!(fileTypeRegex instanceof RegExp)) {
-            throw new Error("fileTypeRegex must be type of RegExp");
+            throw new TypeError("fileTypeRegex must be type of RegExp");
         }
 
         if (!fileMatchedCallback) {
             throw new Error("fileMatchedCallback must be defined");
         } else if (typeof(fileMatchedCallback) !== 'function') {
-            throw new Error("fileMatchedCallback must be a function");
+            throw new TypeError("fileMatchedCallback must be a function");
         }
 
         this._fileTypeRegex = fileTypeRegex;
