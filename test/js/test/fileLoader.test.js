@@ -14,6 +14,28 @@ define(['app/fileLoader'], function (FileLoader) {
 
     describe('FileLoader', function () {
 
+        describe('#Constructor', function () {
+            it('should throw error if callback is null', function () {
+                expect(function(){
+                    new FileLoader(null);
+                }).to.throwError();
+            });
+
+            it('should throw error if callback is not a function', function(){
+                expect(function(){
+                    new FileLoader({});
+                }).to.throwError();
+
+                expect(function(){
+                    new FileLoader(0);
+                }).to.throwError();
+
+                expect(function(){
+                    new FileLoader('string');
+                }).to.throwError();
+            });
+        });
+
         describe('#loadFile', function () {
             it('should callback with fileReader', function () {
 
