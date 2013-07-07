@@ -12,9 +12,9 @@
 define(['app/imageLoader'], function (ImageLoader) {
     'use strict';
 
-//    define('ImageLoader', function() {
-//        it('', function() {
-//
-//        });
-//    });
+    define('ImageLoader', function() {
+        it('', function() {
+
+        });
+    });
 });

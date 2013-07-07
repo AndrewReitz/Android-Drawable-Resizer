@@ -9,11 +9,14 @@
  *
  */
 
-define(function(require){
+define(['app/androidDrawable'], function(AndroidAsset){
     'use strict';
 
-    var AndroidAsset = require('app/androidDrawable');
-
+    /**
+     * Loads images into AndroidAsset
+     * @param {function} callback
+     * @constructor
+     */
     var ImageLoader = function(callback) {
 
         if (!callback) {
@@ -27,6 +30,10 @@ define(function(require){
         this._imageCount = 0;
     };
 
+    /**
+     *
+     * @param numberOfImages
+     */
     ImageLoader.prototype.setNumberOfImages = function(numberOfImages) {
         if (!numberOfImages) {
             throw new Error("numberOfImages can not be null");
@@ -37,6 +44,10 @@ define(function(require){
         this._numberOfImages = numberOfImages;
     };
 
+    /**
+     *
+     * @param density
+     */
     ImageLoader.prototype.setDensity = function(density) {
         if (!density) {
             throw new Error("density can not be null");
@@ -47,6 +58,11 @@ define(function(require){
         this._density = density;
     };
 
+    /**
+     *
+     * @param dataUrl
+     * @param filename
+     */
     ImageLoader.prototype.loadImage = function(dataUrl, filename) {
 
         if (!this._density) {
@@ -64,6 +80,10 @@ define(function(require){
         image.src = dataUrl;
     };
 
+    /**
+     *
+     * @private
+     */
     ImageLoader.prototype._onLoadComplete = function() {
         var androidAssets = [];
         this._imageCount = this._imageCount + 1;
