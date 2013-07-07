@@ -13,7 +13,8 @@ require.config({
     baseUrl: 'js/',
     paths: {
         node_modules: "../../node_modules/",
-        app: "../../src/js/app"
+        app: "../../src/js/app",
+        jszip: "../../src/js/lib/jszip"
     }
 });
 
@@ -27,6 +28,7 @@ requirejs(["node_modules/mocha/mocha",
             'test/androidDrawable.test',
             'test/fileFilter.test',
             'test/fileLoader.test',
+            'test/fileZipper.test',
             'test/inputFileHandler.test'
         ], function () {
             mocha.run();

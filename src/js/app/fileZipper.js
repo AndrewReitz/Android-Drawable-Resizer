@@ -9,23 +9,49 @@
  *
  */
 
-define(['jszip/jszip'], function () {
+define(['app/androidDrawable', 'jszip/jszip'], function (AndroidDrawable) {
     'use strict';
-    var FileZipper = function() {
+
+    /**
+     * FileZipper, a class for zipping up Android Assets into a zip file
+     * @constructor
+     */
+    var FileZipper = function () {
 
     };
 
-    FileZipper.prototype.zip = function(androidAssets) {
+    /**
+     * Zips up all the androidAssets into their respective folders and then downloads
+     * the zip file.  The folder structure is zip res/hxdpi, res/hdpi, and res/mdpi, in
+     * accordance with android asset folder structure so the folders can just be
+     * dropped into a project.
+     * @param {Array} androidAssets an array of AndroidDrawables
+     */
+    FileZipper.prototype.zip = function (androidAssets) {
+
+        if (!androidAssets) {
+            throw new Error('androidAssets must not be null');
+        } else if (Object.prototype.toString.call(androidAssets) !== '[object Array]') {
+            throw new TypeError('androidAssets must be an array');
+        }
+
+        var i;
+        for(i = 0; i < androidAssets.length; i++) {
+            if (!(androidAssets[i] instanceof AndroidDrawable)) {
+                throw new Error("androidAssets must be a list of AndroidDrawables");
+            }
+        }
+
         var zip = new JSZip();
         var res = zip.folder("res");
         var xhdpi = res.folder("xhdpi");
         var hdpi = res.folder("hdpi");
         var mdpi = res.folder("mdpi");
 
-        for (var i = 0; i < androidAssets.length; i++) {
+        for (i = 0; i < androidAssets.length; i++) {
             var asset = androidAssets[i].getDrawable();
 
-            //if it was a jpg, it's a png now
+            //if it was a jpg, it's a png now, so rename it
             var name = asset.name.replace("jpg", "png");
 
             // split at the , and get the first element because of extra garbage tacked
