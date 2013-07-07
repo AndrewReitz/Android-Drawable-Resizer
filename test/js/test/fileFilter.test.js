@@ -84,6 +84,6 @@ define(['app/fileFilter'], function (FileFilter) {
                 var fileText = new Blob([], mimeText);
                 fileFilterText.checkFile(fileText);
             });
-        })
+        });
     });
 });
