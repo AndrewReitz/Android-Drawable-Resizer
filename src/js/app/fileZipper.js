@@ -30,7 +30,7 @@ define(['app/androidDrawable', 'jszip/jszip'], function (AndroidDrawable) {
     FileZipper.prototype.zip = function (androidAssets) {
 
         if (!androidAssets) {
-            throw new Error('androidAssets must not be null');
+            throw new Error('androidAssets must be defined');
         } else if (Object.prototype.toString.call(androidAssets) !== '[object Array]') {
             throw new TypeError('androidAssets must be an array');
         }

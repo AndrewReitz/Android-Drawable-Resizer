@@ -24,8 +24,8 @@ define(['app/fileZipper', 'app/androidDrawable'], function (FileZipper) {
         describe('#zip', function () {
             var fileZipper = new FileZipper();
 
-            it('should throw error if androidAssets are null', function () {
-                var message = /androidAssets must not be null/;
+            it('should throw error if androidAssets are not defined', function () {
+                var message = /androidAssets must be defined/;
                 expect(function () {
                     fileZipper.zip(null);
                 }).to.throwError(message);
@@ -34,7 +34,7 @@ define(['app/fileZipper', 'app/androidDrawable'], function (FileZipper) {
             it('should throw error if androidAssets is not an Array', function () {
                 var message = /androidAssets must be an array/;
                 expect(function () {
-                    fileZipper.zip(0);
+                    fileZipper.zip(1);
                 }).to.throwError(message);
 
                 expect(function () {

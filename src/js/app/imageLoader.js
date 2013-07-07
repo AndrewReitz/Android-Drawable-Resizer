@@ -14,13 +14,14 @@ define(['app/androidDrawable'], function(AndroidAsset){
 
     /**
      * Loads images into AndroidAsset
-     * @param {function} callback
+     * @param {function} callback callback that is called after all images are loaded
+     * it is passed a list of AndroidAssets
      * @constructor
      */
     var ImageLoader = function(callback) {
 
         if (!callback) {
-            throw new Error("callback can not be null");
+            throw new Error("callback must be defined");
         } else if (typeof(callback) !== 'function') {
             throw new TypeError("callback must be a function");
         }
@@ -31,12 +32,12 @@ define(['app/androidDrawable'], function(AndroidAsset){
     };
 
     /**
-     *
-     * @param numberOfImages
+     * Set the number of images that are going to be loaded
+     * @param {number} numberOfImages
      */
     ImageLoader.prototype.setNumberOfImages = function(numberOfImages) {
         if (!numberOfImages) {
-            throw new Error("numberOfImages can not be null");
+            throw new Error("numberOfImages must be defined");
         } else if(typeof(numberOfImages) !== 'number') {
             throw new TypeError("numberOfImages must be a number");
         }
@@ -45,12 +46,12 @@ define(['app/androidDrawable'], function(AndroidAsset){
     };
 
     /**
-     *
-     * @param density
+     * Set the density of the images being passed to this ImageLoader
+     * @param {number} density
      */
     ImageLoader.prototype.setDensity = function(density) {
         if (!density) {
-            throw new Error("density can not be null");
+            throw new Error("density can not be defined");
         } else if (typeof(density) !== 'number') {
             throw new TypeError("density must be a number");
         }
@@ -59,9 +60,9 @@ define(['app/androidDrawable'], function(AndroidAsset){
     };
 
     /**
-     *
-     * @param dataUrl
-     * @param filename
+     * Loads an image from a base64 encoded string
+     * @param {string} dataUrl base64 encoded string
+     * @param {string} filename name of the image
      */
     ImageLoader.prototype.loadImage = function(dataUrl, filename) {
 
@@ -73,6 +74,18 @@ define(['app/androidDrawable'], function(AndroidAsset){
             throw new Error("setNumberOfImages must be called before loadImage can be called");
         }
 
+        if (!dataUrl){
+            throw new Error("dataUrl must be defined");
+        } else if(typeof(dataUrl) !== 'string' || dataUrl.indexOf("data:image/png") < 0) {
+            throw new TypeError("dataUrl mst be a base64 encoded string");
+        }
+
+        if (!filename){
+            throw new Error("filename must be defined");
+        } else if(typeof(filename) !== 'string') {
+            throw new TypeError("filename mmst be a string");
+        }
+
         var image = new Image();
         image.name = filename;
         this._imageHolder.push(image);
@@ -81,7 +94,8 @@ define(['app/androidDrawable'], function(AndroidAsset){
     };
 
     /**
-     *
+     * Callback when a image is loaded.  If all images are loaded
+     * the callback that was passed to the constructor is called.
      * @private
      */
     ImageLoader.prototype._onLoadComplete = function() {

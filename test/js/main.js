@@ -29,6 +29,7 @@ requirejs(["node_modules/mocha/mocha",
             'test/fileFilter.test',
             'test/fileLoader.test',
             'test/fileZipper.test',
+            'test/imageLoader.test',
             'test/inputFileHandler.test'
         ], function () {
             mocha.run();
