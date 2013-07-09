@@ -83,7 +83,7 @@ define(['app/androidDrawable'], function(AndroidAsset){
         if (!filename){
             throw new Error("filename must be defined");
         } else if(typeof(filename) !== 'string') {
-            throw new TypeError("filename mmst be a string");
+            throw new TypeError("filename must be a string");
         }
 
         var image = new Image();
