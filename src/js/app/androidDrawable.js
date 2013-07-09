@@ -10,10 +10,8 @@
  */
 
 
-define(function(require){
+define(['app/densities'], function(Densities){
     'use strict';
-
-    var Densities = require('app/densities');
 
     /**
      * AndroidDrawable takes in an image and the density of the image

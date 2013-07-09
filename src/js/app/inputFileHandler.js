@@ -9,13 +9,10 @@
  *
  */
 
-define(function (require) {
+define(['app/imageLoader', 'app/densities'], function (ImageLoader, Densities) {
     'use strict';
 
-    var ImageLoader = require('app/imageLoader');
-    var Densities = require('app/densities');
-
-    var InputFileHandler = function(inputFilesElement, fileLoadedCallback, imageLoader) {
+    var InputFileHandler = function (inputFilesElement, fileLoadedCallback, imageLoader) {
 
         if (!inputFilesElement) {
             throw new Error("inputFilesElement can not be null");
@@ -39,7 +36,7 @@ define(function (require) {
         this._fileLoadedCallback = fileLoadedCallback;
     };
 
-    InputFileHandler.prototype._onChangeHandler = function() {
+    InputFileHandler.prototype._onChangeHandler = function () {
         var inputFiles = this._inputImagesElement.files || [];
 
         // TODO get density from drop down

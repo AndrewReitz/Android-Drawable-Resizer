@@ -9,7 +9,7 @@
  *
  */
 
-define(['app/androidDrawable', 'jszip/jszip'], function (AndroidDrawable) {
+define(['app/androidDrawable', 'jszip/jszip.min'], function (AndroidDrawable) {
     'use strict';
 
     /**
