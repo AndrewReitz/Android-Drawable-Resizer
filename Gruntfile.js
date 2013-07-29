@@ -15,16 +15,6 @@ module.exports = function (grunt) {
     var fs = require('fs');
     var path = require('path');
 
-    /**
-     * File output encoding
-     * @type {string}
-     */
-    var FILE_ENCODING = 'utf-8';
-
-    /**
-     *  Files to watch and run jshint on
-     *  @type {Array}
-     */
     var FILES = ['Gruntfile.js', 'src/js/**/*.js'];
 
     /**
@@ -32,18 +22,6 @@ module.exports = function (grunt) {
      * @type {string}
      */
     var BUILD_OUTPUT_FOLDER = 'Release';
-
-    /**
-     * Name of the file requirejs saves to after optimizations run
-     * @type {string}
-     */
-    var REQUIREJS_FILENAME_OUTPUT = 'script.js';
-
-    /**
-     * Require JS output file
-     * @type {string}
-     */
-    var REQUIREJS_OUTPUT = path.join(BUILD_OUTPUT_FOLDER, REQUIREJS_FILENAME_OUTPUT);
 
     /**
      * Removes a directory and all files from the file system
