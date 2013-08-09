@@ -15,7 +15,7 @@ module.exports = function (grunt) {
     var fs = require('fs');
     var path = require('path');
 
-    var FILES = ['Gruntfile.js', 'src/js/**/*.js'];
+    var FILES = ['Gruntfile.js', 'src/**/*', 'test/**/*'];
 
     /**
      * Build folder name
@@ -79,7 +79,7 @@ module.exports = function (grunt) {
         watch: {
             scripts: {
                 files: FILES,
-                tasks: ['jshint']
+                tasks: ['build']
             }
         },
         jshint: {
@@ -127,7 +127,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['jshint']);
 
     // Build task
-    grunt.registerTask('build', 'creates a release file', [
+    grunt.registerTask('build', 'creates a release build', [
         'build-init',
         'jshint',
         'requirejs',
