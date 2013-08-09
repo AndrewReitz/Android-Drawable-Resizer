@@ -1,6 +1,8 @@
 # Android Drawable Resizer
 Resize android assets for XHDPI, HDPI, and MDPI quick and fast and right in your browser!
 
+Try it [here](http://pieces029.github.io/Android-Drawable-Resizer/)
+
 ## Features
 - Resize multiple Android Assets at once
 - Downloads folder in a zip file that can be unzipped right in the project
