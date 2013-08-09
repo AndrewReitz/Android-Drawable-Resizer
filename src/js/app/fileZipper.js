@@ -70,7 +70,9 @@ define(['app/androidDrawable', 'jszip/jszip.min'], function (AndroidDrawable) {
         myLink.download = "AndroidAssets.zip";
         myLink.click();
 
-        // TODO delete mylink so that this can be run multiple times
+        // Can't do this multiple times in a row for some odd reason
+        // refresh the page so now you can
+        document.location.reload(true);
     };
 
     return FileZipper;
