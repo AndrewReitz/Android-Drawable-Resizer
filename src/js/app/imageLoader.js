@@ -76,7 +76,7 @@ define(['app/androidDrawable'], function(AndroidAsset){
 
         if (!dataUrl){
             throw new Error("dataUrl must be defined");
-        } else if(typeof(dataUrl) !== 'string' || dataUrl.indexOf("data:image/png") < 0) {
+        } else if(typeof(dataUrl) !== 'string' || dataUrl.indexOf("data:image/") < 0) {
             throw new TypeError("dataUrl mst be a base64 encoded string");
         }
 
