@@ -6,7 +6,7 @@ Resize android assets for XHDPI, HDPI, and MDPI quick and fast and right in your
 - Downloads folder in a zip file that can be unzipped right in the project
 - Uses browser to do all the hard work, can be used on local machine without any web server
 
--- Currently does not support 9 patches and works best sizing down not up
+###### Currently does not support 9 patches and works best sizing down not up
 
 ## Features comming soon
 - Better resizing algorithms
