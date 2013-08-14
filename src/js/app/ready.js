@@ -24,6 +24,7 @@ define([
          */
         function ready() {
             var inputFilesElement = document.getElementById("inputFiles");
+            var imageTypeElement = document.getElementById("imageType");
 
             var fileZipper = new FileZipper();
             var imageLoader = new ImageLoader(fileZipper.zip.bind(fileZipper));

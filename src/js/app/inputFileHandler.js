@@ -12,12 +12,18 @@
 define(['app/imageLoader', 'app/densities'], function (ImageLoader, Densities) {
     'use strict';
 
-    var InputFileHandler = function (inputFilesElement, fileLoadedCallback, imageLoader) {
+    var InputFileHandler = function (inputFilesElement, imageTypeElement, fileLoadedCallback, imageLoader) {
 
         if (!inputFilesElement) {
             throw new Error("inputFilesElement can not be null");
         } else if (inputFilesElement.type !== 'file') {
             throw new Error("inputFilesElement type must be of type file");
+        }
+
+        if (!imageTypeElement) {
+            throw new Error("imageTypeElement can not be null");
+        } else if (imageTypeElement.type !== 'select-one') {
+            throw new Error("imageTypeElement type must be of type select-one");
         }
 
         if (!fileLoadedCallback) {
