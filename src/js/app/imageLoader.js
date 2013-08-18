@@ -36,7 +36,7 @@ define(['app/androidDrawable'], function(AndroidAsset){
      * @param {number} numberOfImages
      */
     ImageLoader.prototype.setNumberOfImages = function(numberOfImages) {
-        if (!numberOfImages) {
+        if (numberOfImages === null || numberOfImages === undefined) {
             throw new Error("numberOfImages must be defined");
         } else if(typeof(numberOfImages) !== 'number') {
             throw new TypeError("numberOfImages must be a number");

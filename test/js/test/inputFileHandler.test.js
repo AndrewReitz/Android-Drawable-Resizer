@@ -15,28 +15,44 @@ define(['app/inputFileHandler', 'app/imageLoader'], function (InputFileHandler, 
     describe('InputFileHandler', function() {
         it('should call callback once per file', function() {
 
-            var element = document.createElement('input');
-            element.type = 'file';
+            var inputFilesElement = document.createElement('input');
+            inputFilesElement.type = 'file';
+
+            var imageDensityElement = document.createElement('select');
+            imageDensityElement.name = 'select';
+            imageDensityElement.value = 'HDPI';
+
+            var resizeAssetsOnClickedElement = document.createElement('a');
+            resizeAssetsOnClickedElement.href = '#';
 
             // mock image loader
             ImageLoader.prototype.setDensity = function() {};
             ImageLoader.prototype.setNumberOfImages = function() {};
 
-            var inputFileHandler = new InputFileHandler(element, function() {}, new ImageLoader(function() {}));
+            var inputFileHandler = new InputFileHandler(
+                inputFilesElement,
+                imageDensityElement,
+                resizeAssetsOnClickedElement,
+                function() {},
+                new ImageLoader(
+                    function() {}
+                )
+            );
 
             inputFileHandler._fileLoadedCallback = function() {
                 throw new Error('Should not be run');
             };
             inputFileHandler._inputImagesElement.files = [];
 
-            inputFileHandler._onChangeHandler();
+            inputFileHandler._onClickHandler();
 
             // TODO figure out how to check how many times this was called
             inputFileHandler._fileLoadedCallback = function(val) {
                 expect(val).to.be(1);
             };
+
             inputFileHandler._inputImagesElement.files = [1,1,1,1,1];
-            inputFileHandler._onChangeHandler();
+            inputFileHandler._onClickHandler();
         });
     });
 });

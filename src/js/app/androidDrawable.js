@@ -61,7 +61,7 @@ define(['app/densities'], function(Densities){
     };
 
     /**
-     * Get's the name and resized assets as base64 encoded strings
+     * Gets the name and resized assets as base64 encoded strings
      * @returns {{name: {string}, mdpi: {string}, hdpi: {string}, xhdpi: {string}}}
      */
     AndroidDrawable.prototype.getDrawable = function() {

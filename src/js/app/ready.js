@@ -24,14 +24,22 @@ define([
          */
         function ready() {
             var inputFilesElement = document.getElementById("inputFiles");
-            var imageTypeElement = document.getElementById("imageType");
+            var imageDensityElement = document.getElementById("imageDensity");
+            var resizeButtonElement = document.getElementById("resize");
 
             var fileZipper = new FileZipper();
             var imageLoader = new ImageLoader(fileZipper.zip.bind(fileZipper));
             var fileLoader = new FileLoader(imageLoader.loadImage.bind(imageLoader));
             var fileFilter = new FileFilter(/^image\//, fileLoader.loadFile.bind(fileLoader));
-            new InputFileHandler(inputFilesElement, fileFilter.checkFile.bind(fileFilter),
-                imageLoader);
+            new InputFileHandler(
+                inputFilesElement,
+                imageDensityElement,
+                resizeButtonElement,
+                fileFilter.checkFile.bind(
+                    fileFilter
+                ),
+                imageLoader
+            );
         }
 
         /**

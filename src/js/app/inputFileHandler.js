@@ -12,7 +12,13 @@
 define(['app/imageLoader', 'app/densities'], function (ImageLoader, Densities) {
     'use strict';
 
-    var InputFileHandler = function (inputFilesElement, imageTypeElement, fileLoadedCallback, imageLoader) {
+    var InputFileHandler = function (
+        inputFilesElement,
+        imageDensityElement,
+        resizeAssetsOnClickedElement,
+        fileLoadedCallback,
+        imageLoader
+        ) {
 
         if (!inputFilesElement) {
             throw new Error("inputFilesElement can not be null");
@@ -20,10 +26,14 @@ define(['app/imageLoader', 'app/densities'], function (ImageLoader, Densities) {
             throw new Error("inputFilesElement type must be of type file");
         }
 
-        if (!imageTypeElement) {
+        if (!imageDensityElement) {
             throw new Error("imageTypeElement can not be null");
-        } else if (imageTypeElement.type !== 'select-one') {
+        } else if (imageDensityElement.type !== 'select-one') {
             throw new Error("imageTypeElement type must be of type select-one");
+        }
+
+        if (!resizeAssetsOnClickedElement) {
+            throw new Error("resizeOnClickedElement must not be null");
         }
 
         if (!fileLoadedCallback) {
@@ -36,17 +46,19 @@ define(['app/imageLoader', 'app/densities'], function (ImageLoader, Densities) {
             throw new TypeError("imageLoader must be an instance of ImageLoader");
         }
 
+        this._imageDensityElement = imageDensityElement;
         this._imageLoader = imageLoader;
         this._inputImagesElement = inputFilesElement;
-        this._inputImagesElement.onchange = this._onChangeHandler.bind(this);
+        this._resizeOnClickedElement = resizeAssetsOnClickedElement;
+        this._resizeOnClickedElement.onclick = this._onClickHandler.bind(this);
         this._fileLoadedCallback = fileLoadedCallback;
     };
 
-    InputFileHandler.prototype._onChangeHandler = function () {
+    InputFileHandler.prototype._onClickHandler = function () {
         var inputFiles = this._inputImagesElement.files || [];
+        var density = Densities[this._imageDensityElement.value];
 
-        // TODO get density from drop down
-        this._imageLoader.setDensity(Densities.XHDPI);
+        this._imageLoader.setDensity(density);
         this._imageLoader.setNumberOfImages(inputFiles.length);
 
         for (var i = 0; i < inputFiles.length; i++) {

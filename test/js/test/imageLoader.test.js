@@ -62,10 +62,6 @@ define(['app/imageLoader'], function (ImageLoader) {
                 expect(function () {
                     imageLoader.setNumberOfImages(undefined);
                 }).to.throwError(errorMessage);
-
-                expect(function () {
-                    imageLoader.setNumberOfImages(0);
-                }).to.throwError(errorMessage);
             });
 
             it('should throw an Error if numberOfImages is not a number', function () {
@@ -227,7 +223,7 @@ define(['app/imageLoader'], function (ImageLoader) {
                 }).to.throwError(errorMessage);
 
                 expect(function () {
-                    imageLoader.loadImage('data:image/jpg', TEST_IMAGE_FILENAME);
+                    imageLoader.loadImage('data:text/html', TEST_IMAGE_FILENAME);
                 }).to.throwError(errorMessage);
 
                 expect(function () {
