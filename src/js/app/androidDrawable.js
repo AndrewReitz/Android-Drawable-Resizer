@@ -9,8 +9,7 @@
  *
  */
 
-
-define(['app/densities'], function(Densities){
+define(['app/densities'], function (Densities) {
     'use strict';
 
     /**
@@ -20,7 +19,7 @@ define(['app/densities'], function(Densities){
      * @param density
      * @constructor
      */
-    var AndroidDrawable = function(image, density) {
+    var AndroidDrawable = function (image, density) {
 
         if (!image) {
             throw new TypeError('image can not be null');
@@ -64,7 +63,7 @@ define(['app/densities'], function(Densities){
      * Gets the name and resized assets as base64 encoded strings
      * @returns {{name: {string}, mdpi: {string}, hdpi: {string}, xhdpi: {string}}}
      */
-    AndroidDrawable.prototype.getDrawable = function() {
+    AndroidDrawable.prototype.getDrawable = function () {
         return {
             name: this.name,
             mdpi: this.mdpi,
@@ -80,7 +79,7 @@ define(['app/densities'], function(Densities){
      * @returns {string} Base64 encoded image using toDataURL
      * @private
      */
-    AndroidDrawable.prototype._createNewImage = function(image, scale) {
+    AndroidDrawable.prototype._createNewImage = function (image, scale) {
         var width = Math.floor(image.width * scale);
         var height = Math.floor(image.height * scale);
 
@@ -91,7 +90,19 @@ define(['app/densities'], function(Densities){
         var context = canvas.getContext('2d');
         context.drawImage(image, 0, 0, width, height);
 
+        if (image.name.indexOf('9.png') !== -1) {
+            return this._createNewImageNinePatch(context, scale);
+        }
+
         return canvas.toDataURL('image/png');
+    };
+
+    AndroidDrawable.prototype._createNewImageNinePatch = function (imageContext, scale) {
+        // First loop through and get all the data points that are black
+        // while putting replacing with transparent values
+        for (var i = 0; i < imageContext.height; i++) {
+
+        }
     };
 
     return AndroidDrawable;
