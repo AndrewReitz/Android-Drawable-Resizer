@@ -90,19 +90,48 @@ define(['app/densities'], function (Densities) {
         var context = canvas.getContext('2d');
         context.drawImage(image, 0, 0, width, height);
 
-        if (image.name.indexOf('9.png') !== -1) {
-            return this._createNewImageNinePatch(context, scale);
-        }
-
         return canvas.toDataURL('image/png');
     };
 
-    AndroidDrawable.prototype._createNewImageNinePatch = function (imageContext, scale) {
-        // First loop through and get all the data points that are black
-        // while putting replacing with transparent values
-        for (var i = 0; i < imageContext.height; i++) {
+    AndroidDrawable.prototype._createNewImageNinePatch = function (image, scale) {
+        var width = image.width;
+        var height = image.height;
 
+        var canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        var context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, width, height);
+
+        var imageData = context.createImageData(
+            width,
+            height
+        );
+
+        // Top
+        for(var i = 3; i < (width * 4); i += 4) {
+            imageData.data[i] = 0;
         }
+
+        // Bottom
+        for(var j = (height * (width - 1) * 4) -1; j < (4 * height * width); j+=4) {
+            imageData.data[j] = 0;
+        }
+
+        // Left
+        for (var k = 3; k < (height * (width - 1) * 4) -1; k += (4 * height)) {
+            imageData.data[k] = 0;
+        }
+
+        // Right
+        for (var l = (width * 4) - 1; l < height * width * 4; l += (4 * height)) {
+            imageData.data[l] = 0;
+        }
+
+        context.putImageData(imageData, 0, 0);
+
+        return context.toDataURL('image/png');
     };
 
     return AndroidDrawable;
