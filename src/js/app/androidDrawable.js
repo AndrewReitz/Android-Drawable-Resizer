@@ -96,6 +96,8 @@ define(['app/densities'], function (Densities) {
     AndroidDrawable.prototype._createNewImageNinePatch = function (image, scale) {
         var width = image.width;
         var height = image.height;
+        var newWidth = Math.floor(image.width * scale);
+        var newHeight = Math.floor(image.height * scale);
 
         var canvas = document.createElement('canvas');
         canvas.width = width;
@@ -110,23 +112,39 @@ define(['app/densities'], function (Densities) {
         );
 
         // Top
+        var top = [];
         for(var i = 3; i < (width * 4); i += 4) {
-            imageData.data[i] = 0;
+            if (imageData.data[i] !== 0) {
+                top.push(i);
+                imageData.data[i] = 0;
+            }
         }
 
         // Bottom
+        var bottom = [];
         for(var j = (height * (width - 1) * 4) -1; j < (4 * height * width); j+=4) {
-            imageData.data[j] = 0;
+            if (imageData.data[j] !== 0) {
+                bottom.push(j);
+                imageData.data[j] = 0;
+            }
         }
 
         // Left
+        var left = [];
         for (var k = 3; k < (height * (width - 1) * 4) -1; k += (4 * height)) {
-            imageData.data[k] = 0;
+            if (imageData.data[k] !== 0) {
+                left.push(k);
+                imageData.data[k] = 0;
+            }
         }
 
         // Right
+        var right = [];
         for (var l = (width * 4) - 1; l < height * width * 4; l += (4 * height)) {
-            imageData.data[l] = 0;
+            if (imageData.data[l] !== 0) {
+                right.push(l);
+                imageData.data[l] = 0;
+            }
         }
 
         context.putImageData(imageData, 0, 0);
