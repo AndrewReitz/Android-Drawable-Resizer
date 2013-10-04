@@ -45,9 +45,9 @@ define(
 
             var zip = new JSZip();
             var res = zip.folder("res");
-            var xhdpi = res.folder("xhdpi");
-            var hdpi = res.folder("hdpi");
-            var mdpi = res.folder("mdpi");
+            var xhdpi = res.folder("drawable-xhdpi");
+            var hdpi = res.folder("drawable-hdpi");
+            var mdpi = res.folder("drawable-mdpi");
 
             for (i = 0; i < androidAssets.length; i++) {
                 var asset = androidAssets[i].getDrawable();
