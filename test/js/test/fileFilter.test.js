@@ -57,12 +57,21 @@ define(['app/fileFilter'], function (FileFilter) {
                 var fileFilterText = new FileFilter(/text\/plain/, callback);
 
                 var fileXml = new Blob([], mimeXml);
+                // name needed to skip 9 patch check
+                //TODO remove when 9 patch support added
+                fileXml.name = "";
                 fileFilterImage.checkFile(fileXml);
 
                 var fileText = new Blob([], mimeText);
+                // name needed to skip 9 patch check
+                //TODO remove when 9 patch support added
+                fileText.name = "";
                 fileFilterImage.checkFile(fileText);
 
                 var fileJpg = new Blob([], mimeImageJpg);
+                // name needed to skip 9 patch check
+                //TODO remove when 9 patch support added
+                fileJpg.name = "";
                 fileFilterText.checkFile(fileJpg);
             });
 
@@ -76,12 +85,21 @@ define(['app/fileFilter'], function (FileFilter) {
                 var fileFilterText = new FileFilter(/text\/plain/, callback);
 
                 var fileJpg = new Blob([], mimeImageJpg);
+                // name needed to skip 9 patch check
+                //TODO remove when 9 patch support added
+                fileJpg.name = "";
                 fileFilterImage.checkFile(fileJpg);
 
                 var filePng = new Blob([], mimeImagePng);
+                // name needed to skip 9 patch check
+                //TODO remove when 9 patch support added
+                filePng.name = "";
                 fileFilterImage.checkFile(filePng);
 
                 var fileText = new Blob([], mimeText);
+                // name needed to skip 9 patch check
+                //TODO remove when 9 patch support added
+                fileText.name = "";
                 fileFilterText.checkFile(fileText);
             });
         });

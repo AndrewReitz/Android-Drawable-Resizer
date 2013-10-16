@@ -49,7 +49,9 @@ define(function () {
             throw new Error("file must be an instance of Blob");
         }
 
-        if (!!file.type.toLowerCase().match(this._fileTypeRegex)) {
+        // Filter out 9 patches for now
+        // TODO remove once 9 patches work properly
+        if (file.name.indexOf(".9.png") === -1 && !!file.type.toLowerCase().match(this._fileTypeRegex)) {
             this._fileMatchedCallback(file);
         }
     };
