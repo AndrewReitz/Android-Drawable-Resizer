@@ -26,7 +26,7 @@ module.exports = function (grunt) {
     /**
      * Removes a directory and all files from the file system
      * @param {string} dirPath path that it and it's dependents should be removed from
-     * @param {Array} fileFilters array of string that are compared to a filename, if a file
+     * @param {Array} [fileFilters] array of string that are compared to a filename, if a file
      * matches this string if will not be removed
      */
     var rmDir = function (dirPath, fileFilters) {
@@ -147,6 +147,19 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build-post', function () {
+        // delete left over files that are not needed for release
+        var buildTxtFile = path.join(BUILD_OUTPUT_FOLDER, "build.txt");
+        var jshintFile = path.join(BUILD_OUTPUT_FOLDER, "js/.jshintrc");
+        fs.unlinkSync(buildTxtFile);
+        fs.unlinkSync(jshintFile);
+
+        // delete left over directories that are not needed for release
+        var appDir = path.join(BUILD_OUTPUT_FOLDER, "js/app");
+        var jszipDir = path.join(BUILD_OUTPUT_FOLDER, "js/lib/jszip");
+        rmDir(appDir);
+        rmDir(jszipDir);
+
+
         console.log('\nbuild complete!');
     });
 

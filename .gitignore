@@ -16,6 +16,7 @@ node_modules
 
 /src/js/lib
 /lib
+/src/js/lib
 /Release
 
 *.iml
