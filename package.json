@@ -1,14 +1,22 @@
 {
-  "name": "Android-Drawable-Resizer",
-  "version": "0.1.0",
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-watch": "~0.4.3",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "requirejs": "~2.1.6",
-    "mocha": "~1.9.0",
-    "expect.js": "~0.2.0",
-    "cheerio": "~0.12.0"
-  }
+    "name": "Android-Drawable-Resizer",
+    "version": "0.1.0",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "~0.1.1",
+        "grunt-contrib-requirejs": "~0.4.1",
+        "grunt-contrib-connect": "~0.5.0",
+        "grunt-contrib-watch": "~0.5.3",
+        "grunt-open": "~0.2.2",
+        "grunt-html": "~0.3.4",
+        "grunt-concurrent": "~0.4.2",
+        "grunt-contrib-imagemin": "~0.4.0",
+        "grunt-contrib-copy": "~0.5.0",
+        "grunt-github-pages": "0.0.4",
+        "grunt-contrib-clean": "~0.5.0",
+        "requirejs": "~2.1.6",
+        "mocha": "~1.9.0",
+        "expect.js": "~0.2.0",
+        "cheerio": "~0.12.0"
+    }
 }
