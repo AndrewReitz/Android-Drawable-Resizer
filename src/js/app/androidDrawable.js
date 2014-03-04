@@ -30,22 +30,32 @@ define(['app/densities'], function(Densities){
 
         this._density = density;
 
+        var xxhdpi;
         var xhdpi;
         var hdpi;
         var mdpi;
 
         switch (density) {
+            case Densities.XXHDPI:
+                xxhdpi = this._createNewImage(image, 1);
+                xhdpi = this._createNewImage(image, (2/3));
+                hdpi = this._createNewImage(image, (1/2));
+                mdpi = this._createNewImage(image, (1/3));
+                break;
             case Densities.XHDPI:
+                xxhdpi = this._createNewImage(image, 1.5);
                 xhdpi = this._createNewImage(image, 1);
                 hdpi = this._createNewImage(image, 0.75);
                 mdpi = this._createNewImage(image, 0.5);
                 break;
             case Densities.HDPI:
+                xxhdpi = this._createNewImage(image, 1.995);
                 xhdpi = this._createNewImage(image, 1.33);
                 hdpi = this._createNewImage(image, 1);
                 mdpi = this._createNewImage(image, 0.66);
                 break;
             case Densities.MDPI:
+                xxhdpi = this._createNewImage(image, 3);
                 xhdpi = this._createNewImage(image, 2);
                 hdpi = this._createNewImage(image, 1.5);
                 mdpi = this._createNewImage(image, 1);

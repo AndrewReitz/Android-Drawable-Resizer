@@ -45,6 +45,7 @@ define(
 
             var zip = new JSZip();
             var res = zip.folder("res");
+            var xxhdpi = res.folder("drawable-xxhdpi");
             var xhdpi = res.folder("drawable-xhdpi");
             var hdpi = res.folder("drawable-hdpi");
             var mdpi = res.folder("drawable-mdpi");
@@ -57,6 +58,7 @@ define(
 
                 // split at the , and get the first element because of extra garbage tacked
                 // onto the beginning
+                xxhdpi.file(name, asset.xhdpi.split(',')[1], {base64: true});
                 xhdpi.file(name, asset.xhdpi.split(',')[1], {base64: true});
                 hdpi.file(name, asset.hdpi.split(',')[1], {base64: true});
                 mdpi.file(name, asset.mdpi.split(',')[1], {base64: true});

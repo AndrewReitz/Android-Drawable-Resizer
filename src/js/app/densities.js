@@ -9,7 +9,7 @@
  *
  */
 
-define(function(){
+define(function () {
     'use strict';
 
     /**
@@ -18,9 +18,10 @@ define(function(){
      * @type {{XHDPI: number, HDPI: number, MDPI: number}}
      */
     var Densities = {
-        XHDPI: 1,
-        HDPI: 0.75,
-        MDPI: 0.5
+        XXHDPI: 3,
+        XHDPI: 2,
+        HDPI: 1.5,
+        MDPI: 1
     };
 
     Object.freeze(Densities);
