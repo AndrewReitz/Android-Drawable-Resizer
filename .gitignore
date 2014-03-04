@@ -18,6 +18,7 @@ node_modules
 /lib
 /src/js/lib
 /Release
+/dist
 
 *.iml
 *.ipr
