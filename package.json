@@ -1,6 +1,10 @@
 {
     "name": "Android-Drawable-Resizer",
     "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:pieces029/Android-Drawable-Resizer.git"
+    },
     "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-jshint": "~0.1.1",

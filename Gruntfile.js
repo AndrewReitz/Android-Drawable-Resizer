@@ -12,75 +12,19 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var fs = require('fs');
-    var path = require('path');
-
-    var FILES = ['Gruntfile.js', 'src/**/*', 'test/**/*'];
-
-    /**
-     * Build folder name
-     * @type {string}
-     */
-    var BUILD_OUTPUT_FOLDER = 'Release';
-
-    /**
-     * Removes a directory and all files from the file system
-     * @param {string} dirPath path that it and it's dependents should be removed from
-     * @param {Array} [fileFilters] array of string that are compared to a filename, if a file
-     * matches this string if will not be removed
-     */
-    var rmDir = function (dirPath, fileFilters) {
-
-        fileFilters = fileFilters || [];
-
-        if (!fs.existsSync(dirPath)) {
-            return;
-        }
-
-        var wasFiltered = false;
-        var filtered = false;
-        var files = fs.readdirSync(dirPath);
-        if (files.length > 0) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-
-                //check if file is filtered if it is don't delete it
-                for (var j = 0; j < fileFilters.length; j++) {
-                    if (file === fileFilters[j]) {
-                        filtered = true;
-                    }
-                }
-
-                var filePath = path.join(dirPath, file);
-                var isFile = fs.statSync(filePath).isFile();
-                if (isFile && !filtered) {
-                    console.log("deleting file ", file);
-                    fs.unlinkSync(filePath);
-                }
-                else if (!isFile) {
-                    rmDir(filePath, fileFilters);
-                }
-
-                if (filtered) {
-                    wasFiltered = true;
-                    filtered = false;
-                }
-            }
-        }
-
-        // If a file was filtered skip deleting the directory
-        if (!wasFiltered) {
-            fs.rmdirSync(dirPath);
-        }
-    };
-
     // Project configuration.
     grunt.initConfig({
         watch: {
-            scripts: {
-                files: FILES,
-                tasks: ['build']
+            livereload: {
+                files: ['src/*', 'src/**/*', '!**/lib/**'],
+                tasks: ['htmllint', 'jslint'],
+                options: {
+                    livereload: true
+                }
             }
+        },
+        htmllint: {
+            all: ["src/index.html"]
         },
         jshint: {
             grunt: {
@@ -102,13 +46,55 @@ module.exports = function (grunt) {
                 }
             }
         },
+        connect: {
+            server: {
+                options: {
+                    port: 8888,
+                    base: 'src',
+                    keepalive: true,
+                    hostname: '127.0.0.1',
+                    livereload: true
+                }
+            }
+        },
+        concurrent: {
+            target: {
+                tasks: ['connect', 'watch', 'open:connect'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            }
+        },
+        clean: {
+            build: [
+                "dist/css",
+                "dist/fonts",
+                "dist/images",
+                "dist/lib",
+                "dist/index.html"
+            ]
+        },
+        open: {
+            connect: {
+                path: 'http://127.0.0.1:8888',
+                app: 'google-chrome'
+            },
+            file: {
+                path: 'src/index.html',
+                app: 'google-chrome'
+            },
+            release: {
+                path: 'http://andrewreitz.com/Android-Drawable-Resizer/',
+                app: 'google-chrome'
+            }
+        },
         requirejs: {
             compile: {
                 options: {
                     mainConfigFile: "src/js/main.js",
                     appDir: "src",
                     baseUrl: "js",
-                    dir: BUILD_OUTPUT_FOLDER,
+                    dir: "dist",
                     modules: [
                         {
                             name: "main"
@@ -116,54 +102,51 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        copy: {
+            release: {
+                expand: true,
+                cwd: 'src/',
+                src: '**',
+                dest: 'dist/'
+            }
+        },
+        githubPages: {
+            target: {
+                options: {
+                    // The default commit message for the gh-pages branch
+                    commitMessage: 'pushing updates'
+                },
+                // The folder where your gh-pages repo is
+                src: 'dist'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-github-pages');
+    grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-html');
 
     // Default task
     grunt.registerTask('default', ['jshint']);
 
-    // Build task
-    grunt.registerTask('build', 'creates a release build', [
-        'build-init',
-        'jshint',
-        'requirejs',
-        'build-post'
-    ]);
+    grunt.registerTask('dev', 'Runs all dev commands, if your are developing you want this', 'concurrent:target');
 
-    grunt.registerTask('build-init', function () {
-        console.log('Building Android-Drawable-Resizer...');
+    grunt.registerTask('release', 'Creates the release build and publishes it to github pages',
+        [
+            'clean:build',
+            'copy:release',
+            'deploy'
+        ]
+    );
 
-        // remove any files in lib/requirejs that isn't the require.js file
-        // otherwise there are issues when trying to copy and minify
-        rmDir('src/js/lib/requirejs', ['require.js']);
-
-        if (!fs.existsSync(BUILD_OUTPUT_FOLDER)) {
-            fs.mkdirSync(BUILD_OUTPUT_FOLDER);
-        }
-    });
-
-    grunt.registerTask('build-post', function () {
-        // delete left over files that are not needed for release
-        var buildTxtFile = path.join(BUILD_OUTPUT_FOLDER, "build.txt");
-        var jshintFile = path.join(BUILD_OUTPUT_FOLDER, "js/.jshintrc");
-        fs.unlinkSync(buildTxtFile);
-        fs.unlinkSync(jshintFile);
-
-        // delete left over directories that are not needed for release
-        var appDir = path.join(BUILD_OUTPUT_FOLDER, "js/app");
-        var jszipDir = path.join(BUILD_OUTPUT_FOLDER, "js/lib/jszip");
-        rmDir(appDir);
-        rmDir(jszipDir);
-
-
-        console.log('\nbuild complete!');
-    });
-
-    grunt.registerTask('clean', 'clean the build folder', function () {
-        rmDir(BUILD_OUTPUT_FOLDER);
-    });
+    grunt.registerTask('deploy', ['githubPages:target']);
 };
