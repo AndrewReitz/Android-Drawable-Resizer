@@ -15,7 +15,7 @@ define(function () {
     /**
      * Enumeration for different densities
      * These numbers should not be used for calculations
-     * @type {{XHDPI: number, HDPI: number, MDPI: number}}
+     * @type {{XXHDPI: number, XHDPI: number, HDPI: number, MDPI: number}}
      */
     var Densities = {
         XXHDPI: 3,

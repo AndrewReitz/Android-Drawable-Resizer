@@ -65,6 +65,7 @@ define(['app/densities'], function(Densities){
         }
 
         this.name = image.name;
+        this.xxhdpi = xxhdpi;
         this.xhdpi = xhdpi;
         this.hdpi = hdpi;
         this.mdpi = mdpi;
@@ -79,7 +80,8 @@ define(['app/densities'], function(Densities){
             name: this.name,
             mdpi: this.mdpi,
             hdpi: this.hdpi,
-            xhdpi: this.xhdpi
+            xhdpi: this.xhdpi,
+            xxhdpi: this.xxhdpi
         };
     };
 
