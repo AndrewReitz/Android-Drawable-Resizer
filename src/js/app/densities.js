@@ -18,9 +18,9 @@ define(function () {
      * @type {{XXHDPI: number, XHDPI: number, HDPI: number, MDPI: number}}
      */
     var Densities = {
-        XXHDPI: 3,
-        XHDPI: 2,
-        HDPI: 1.5,
+        XXHDPI: 4,
+        XHDPI: 3,
+        HDPI: 2,
         MDPI: 1
     };
 
